@@ -5,13 +5,19 @@
 package UserInterface;
 
 import UserPackage.User;
+import UserPackage.dest;
 import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
+import java.nio.file.*;
 import javax.swing.JFileChooser;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -23,12 +29,13 @@ public class CreateUser extends javax.swing.JPanel {
      * Creates new form CreateUser
      */
     User User;
+    dest dest;
     public CreateUser(User User) {
         this.User = User;
         
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -379,12 +386,15 @@ public class CreateUser extends javax.swing.JPanel {
         
         
         
+        
        
     }//GEN-LAST:event_jPhotoActionPerformed
 
     private void jSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSaveActionPerformed
         // TODO add your handling code here:   
-        
+         if(jPath.getText().length()==0){
+        JOptionPane.showMessageDialog(this, "Uploadinf Photo is required!");
+        }else{
         User.setFirstName(jFirstName.getText());
         User.setLastName(jLastName.getText());
         User.setAffiliation(jAffiliation.getText());
@@ -405,7 +415,6 @@ public class CreateUser extends javax.swing.JPanel {
         User.setStreetLine2(jStreet2.getText());
         long T=Long.parseLong(jTele.getText());
         User.setTelephoneNumber(T);
-        User.setPhoto(jPath.getText());
         
         String DOBs = jDOB.getText();
         String[] parts = DOBs.split("/");
@@ -416,8 +425,18 @@ public class CreateUser extends javax.swing.JPanel {
         User.setAge(Age);
         JOptionPane.showMessageDialog(this, "User Saved");
         
+       
+        Path source = Paths.get(jPath.getText()); 
+        Path destination = dest.getUserDirectory();
+        try {
+            Files.copy(source,destination);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        User.setPhoto(jPath.getText());
+       
         
-        
+         }
         
     }//GEN-LAST:event_jSaveActionPerformed
 

@@ -5,10 +5,13 @@
 package UserPackage;
 
 
+
 /**
  *
  * @author Zaniar
  */
+
+   
 public class User {
     private String FirstName;
     private String LastName;
